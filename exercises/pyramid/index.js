@@ -22,26 +22,27 @@
 
 
 const steps = require("../steps");
-function pyramid(n) {
+function pyramid(n, row = 0, level = '') {
 
-    //midpoint will be used in calculating #'s it will change depending on n
-    //it does not need to be calculated every iteration of column so its put up here. we are watching for row number of elements to the left and row number of elements to the right
-    const midpoint  = Math.floor((2 * n -1) / 2);
-   //iterate from 2 * n - 1 for the correct number of columns
-    for (let row = 0; row < n; row++){
-        let level = '';
-
-        for(let column = 0; column < 2 * n - 1; column++){
-            if(midpoint - row <= column && midpoint + row >= column){
-                level += '#';
-            } else {
-                level += ' ';
-            }
-        }
-
-        console.log(level)
+    if(row === n){
+        return;
     }
  
+    if(level.length === 2 * n -1){
+        console.log(level);
+        return pyramid(n, row+1);
+    }
+
+    const midpoint = Math.floor((2 * n -1) /2);
+    let add;
+    
+    if(midpoint - row <= level.length && midpoint + row >= level.length){
+        add = '#';
+    } else {
+        add = ' ';
+    }
+
+    pyramid(n, row, level + add)
 };
 
 
@@ -81,6 +82,33 @@ function pyramid(n) {
 //     }
 
 //     pyramid(n, row, stair);
+// };
+
+
+
+
+//solution
+// const steps = require("../steps");
+// function pyramid(n) {
+
+//     //midpoint will be used in calculating #'s it will change depending on n
+//     //it does not need to be calculated every iteration of column so its put up here. we are watching for row number of elements to the left and row number of elements to the right
+//     const midpoint  = Math.floor((2 * n -1) / 2);
+//    //iterate from 2 * n - 1 for the correct number of columns
+//     for (let row = 0; row < n; row++){
+//         let level = '';
+
+//         for(let column = 0; column < 2 * n - 1; column++){
+//             if(midpoint - row <= column && midpoint + row >= column){
+//                 level += '#';
+//             } else {
+//                 level += ' ';
+//             }
+//         }
+
+//         console.log(level)
+//     }
+ 
 // };
 
 module.exports = pyramid;
